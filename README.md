@@ -12,10 +12,14 @@ other way i hope you like my little triggerbot and dont get banned.
 
 as far only 15 ppl used my trigger without bann but still use at own Risk TY
 
+![helpware1](https://github.com/Sweaty17/Valorant-Color-Triggerbot-ImGui/assets/113630304/6638f196-00a0-4472-8206-180ec219076d)
+
+
 ## SETTINGS
 
 - RawInputBuffer or what evers its called             Turn that Shitt OFF
 - Windowed Fullscreen
+
 - second fire key to "p"
 - Enemy outline Color (Purple) its the only color that is working
 - also hold mode isnt working so just click triggerbot and AIM XD
