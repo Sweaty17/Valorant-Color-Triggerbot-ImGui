@@ -15,6 +15,10 @@ as far only 15 ppl used my trigger without bann but still use at own Risk TY
 ![helpware1](https://github.com/Sweaty17/Valorant-Color-Triggerbot-ImGui/assets/113630304/6638f196-00a0-4472-8206-180ec219076d)
 
 
+
+https://github.com/Sweaty17/Valorant-Color-Triggerbot-ImGui/assets/113630304/b4e9e45f-1d99-4e70-a098-acdffb24fb8a
+
+
 ## SETTINGS
 
 - RawInputBuffer or what evers its called             Turn that Shitt OFF
