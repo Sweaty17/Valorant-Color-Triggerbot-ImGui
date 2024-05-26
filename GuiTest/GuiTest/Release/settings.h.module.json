@@ -1,0 +1,22 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "Release\\settings.h.obj",
+            "outputs": [
+                "C:\\Users\\Root\\Desktop\\COODING\\IMGUITEST\\GuiTest\\GuiTest\\Release\\vc143.pdb",
+                "Release\\",
+                "C:\\Users\\Root\\Desktop\\COODING\\IMGUITEST\\GuiTest\\GuiTest\\Release\\settings.h.ifc"
+            ],
+            "provides": [
+                {
+                    "logical-name": "cheat\\settings.h",
+                    "source-path": "c:\\users\\root\\desktop\\cooding\\imguitest\\guitest\\guitest\\cheat\\settings.h",
+                    "lookup-method": "absolute"
+                }
+            ],
+            "requires": []
+        }
+    ]
+}
