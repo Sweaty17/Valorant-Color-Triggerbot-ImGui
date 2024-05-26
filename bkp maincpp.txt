@@ -1,0 +1,171 @@
+#include "gui.h"
+
+#include <iostream>
+#include <thread>
+#include <mutex>
+#include <windows.h>
+#include <vector>
+#include <random>
+#include <algorithm>
+
+
+using namespace std;
+
+const int R = 250;
+const int G = 100;
+const int B = 250;
+const int color_tolerance = 84;
+
+mutex toggle_lock;
+bool triggerbot_toggle = true;
+bool triggerbot = false;
+
+void BunnyHop()
+{
+    if (GetAsyncKeyState(VK_SPACE) & 0x8000) // Überprüfen, ob die Leertaste gedrückt ist
+    {
+        keybd_event(VK_SPACE, 0, 0, 0); // Leertaste drücken
+        keybd_event(VK_SPACE, 0, KEYEVENTF_KEYUP, 0); // Leertaste loslassen
+    }
+}
+
+void searcherino()
+{
+    const int REGION_SIZE = 4;
+    const int CENTER_X = GetSystemMetrics(SM_CXSCREEN) / 2;
+    const int CENTER_Y = GetSystemMetrics(SM_CYSCREEN) / 2;
+
+    RECT searchRegion;
+    searchRegion.left = CENTER_X - REGION_SIZE / 2;
+    searchRegion.top = CENTER_Y - REGION_SIZE / 2;
+    searchRegion.right = CENTER_X + REGION_SIZE / 2;
+    searchRegion.bottom = CENTER_Y + REGION_SIZE / 2;
+
+    HDC hdcScreen = GetDC(NULL);
+    if (!hdcScreen)
+    {
+        cerr << "Error: Unable to get device context." << endl;
+        return;
+    }
+
+    HDC hdcCompatible = CreateCompatibleDC(hdcScreen);
+    if (!hdcCompatible)
+    {
+        cerr << "Error: Unable to create compatible device context." << endl;
+        ReleaseDC(NULL, hdcScreen);
+        return;
+    }
+
+    HBITMAP hbmScreen = CreateCompatibleBitmap(hdcScreen, REGION_SIZE, REGION_SIZE);
+    if (!hbmScreen)
+    {
+        cerr << "Error: Unable to create compatible bitmap." << endl;
+        DeleteDC(hdcCompatible);
+        ReleaseDC(NULL, hdcScreen);
+        return;
+    }
+
+    HGDIOBJ oldObj = SelectObject(hdcCompatible, hbmScreen);
+    if (!oldObj)
+    {
+        cerr << "Error: Unable to select object." << endl;
+        DeleteObject(hbmScreen);
+        DeleteDC(hdcCompatible);
+        ReleaseDC(NULL, hdcScreen);
+        return;
+    }
+
+    if (!BitBlt(hdcCompatible, 0, 0, REGION_SIZE, REGION_SIZE, hdcScreen, searchRegion.left, searchRegion.top, SRCCOPY))
+    {
+        cerr << "Error: Unable to perform BitBlt operation." << endl;
+        SelectObject(hdcCompatible, oldObj);
+        DeleteObject(hbmScreen);
+        DeleteDC(hdcCompatible);
+        ReleaseDC(NULL, hdcScreen);
+        return;
+    }
+
+    SelectObject(hdcCompatible, oldObj);
+    DeleteDC(hdcCompatible);
+    ReleaseDC(NULL, hdcScreen);
+
+    vector<BYTE> pixels(REGION_SIZE * REGION_SIZE * 4);
+    if (!GetBitmapBits(hbmScreen, REGION_SIZE * REGION_SIZE * 4, pixels.data()))
+    {
+        cerr << "Error: Unable to get bitmap bits." << endl;
+        DeleteObject(hbmScreen);
+        return;
+    }
+
+    DeleteObject(hbmScreen);
+
+    for (int i = 0; i < pixels.size(); i += 4)
+    {
+        if (pixels[i] > R - color_tolerance && pixels[i] < R + color_tolerance &&
+            pixels[i + 1] > G - color_tolerance && pixels[i + 1] < G + color_tolerance &&
+            pixels[i + 2] > B - color_tolerance && pixels[i + 2] < B + color_tolerance)
+        {
+            if (triggerbot)
+            {
+                this_thread::sleep_for(chrono::milliseconds(1));
+                keybd_event('P', 0, 0, 0);
+                keybd_event('P', 0, KEYEVENTF_KEYUP, 0);
+            }
+            break;
+        }
+    }
+}
+
+void cooldown()
+{
+    this_thread::sleep_for(chrono::milliseconds(7));
+    lock_guard<mutex> lock(toggle_lock);
+    triggerbot_toggle = true;
+}
+
+void toggle_triggerbot()
+{
+    lock_guard<mutex> lock(toggle_lock);
+    if (triggerbot_toggle)
+    {
+        triggerbot = !triggerbot;
+        triggerbot_toggle = false;
+        thread(cooldown).detach();
+    }
+}
+
+// Deklaration der RenderRegionSizeSlider-Funktion
+void RenderRegionSizeSlider();
+
+int __stdcall wWinMain(HINSTANCE instance, HINSTANCE previousInstance, PWSTR arguments, int commandShow)
+{
+    // create gui
+    gui::CreateHWindow("HelpWare Menu");
+    gui::CreateDevice();
+    gui::CreateImGui();
+
+    while (gui::isRunning)
+    {
+        gui::BeginRender();
+        gui::Render();
+        toggle_triggerbot(); // Toggle triggerbot in GUI loop
+        if (gui::triggerbot_enabled && triggerbot) // Check if triggerbot is enabled in GUI loop and triggerbot is toggled
+        {
+            searcherino(); // Run searcherino in GUI loop
+        }
+        if (gui::bunnyhop_enabled) // Check if bunnyhop is enabled in GUI loop
+        {
+            BunnyHop(); // Run BunnyHop in GUI loop
+        }
+        gui::EndRender();
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(5));
+    }
+
+    // destroy gui
+    gui::DestroyImGui();
+    gui::DestroyDevice();
+    gui::DestroyHWindow();
+
+    return EXIT_SUCCESS;
+}
