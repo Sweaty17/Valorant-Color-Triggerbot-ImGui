@@ -31,7 +31,10 @@ https://github.com/Sweaty17/Valorant-Color-Triggerbot-ImGui/assets/113630304/b4e
 
 
 how to compile LOL:
+
 make sure
+
+
 ![image](https://github.com/Sweaty17/Valorant-Color-Triggerbot-ImGui/assets/113630304/fcf12ad8-c588-4510-a1b6-f63dfcebcb0a)
 ![image](https://github.com/Sweaty17/Valorant-Color-Triggerbot-ImGui/assets/113630304/60c63de9-b420-47a0-b1af-ee9d5282ba7e)
 
