@@ -30,7 +30,7 @@ https://github.com/Sweaty17/Valorant-Color-Triggerbot-ImGui/assets/113630304/b4e
 
 
 
-how to compile LOL:
+## how to compile LOL:
 
 make sure
 
