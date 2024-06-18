@@ -40,4 +40,7 @@ make sure
 
 
 
+## IS IT BANNABLE?
+- ofc it is, but u can lower your chance getting banned if you just try use the trigger as legit as possible...
+
 
