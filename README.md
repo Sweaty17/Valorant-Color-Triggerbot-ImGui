@@ -3,7 +3,7 @@ Valorant Color Triggerbot made with a shitty ImGui
 
 Hi
 
-I just wanted to make a Working Color triggerbot for valorant that will not get u banned and is free, but with my i dont know any C++ so i just took my python code asked chattgpt to convert it in C++ and tada its working its not this good but its working
+I just wanted to make a Working Color triggerbot for valorant that will not get u banned and is free, its not this good but its working
 i tried to add color selection but its not working for me couse if i select other color (rgb code) then Purple the searcherino funktion stops working or gets really slow at it.
 
 if you want to optimize the code or you could help me pls add me on dc: sweaty5406
@@ -22,7 +22,7 @@ https://github.com/Sweaty17/Valorant-Color-Triggerbot-ImGui/assets/113630304/b4e
 ## SETTINGS
 
 - RawInputBuffer or what evers its called             Turn that Shitt OFF
-- Windowed Fullscreen
+- Windowed Fullscreen (FILL) and play 1920x1080 only
 
 - second fire key to "p"
 - Enemy outline Color (Purple) its the only color that is working
